@@ -1,0 +1,69 @@
+{
+    "version": "6.3",
+    "data_api_version": "3.0",
+    "routing_model": {
+        "PRODUCT_SELECT": []
+    },
+    "screens": [
+        {
+            "id": "PRODUCT_SELECT",
+            "title": "Select items",
+            "terminal": true,
+            "success": true,
+            "data": {
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string" },
+                            "title": { "type": "string" },
+                            "description": { "type": "string" }
+                        }
+                    },
+                    "__example__": [
+                        { "id": "product:1", "title": "Sample Item", "description": "PKR 0.00" }
+                    ]
+                },
+                "category_id": {
+                    "type": "string",
+                    "__example__": ""
+                },
+                "flow_token": {
+                    "type": "string",
+                    "__example__": ""
+                }
+            },
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "Form",
+                        "name": "product_select_form",
+                        "children": [
+                            {
+                                "type": "CheckboxGroup",
+                                "name": "selected_products",
+                                "label": "Tap the items you'd like to order",
+                                "required": true,
+                                "data-source": "${data.products}"
+                            },
+                            {
+                                "type": "Footer",
+                                "label": "Add to cart",
+                                "on-click-action": {
+                                    "name": "complete",
+                                    "payload": {
+                                        "flow_token": "${data.flow_token}",
+                                        "category_id": "${data.category_id}",
+                                        "selected_products": "${form.selected_products}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
